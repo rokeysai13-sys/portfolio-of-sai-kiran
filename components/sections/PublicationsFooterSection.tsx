@@ -175,7 +175,7 @@ export default function PublicationsFooterSection() {
       const H = sticky.offsetHeight;
 
       renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(1);
       renderer.setSize(W, H);
       renderer.setClearColor(0x000000, 0);
 
@@ -285,8 +285,16 @@ export default function PublicationsFooterSection() {
     // Initial image position
     function setImageLeft() {
       const vw = window.innerWidth;
-      gsap.set(imageWrapRef.current, { width: vw, x: 0, opacity: 1 });
-      if (imageOverlayRef.current) gsap.set(imageOverlayRef.current, { opacity: 1 });
+      const imgWrapEl = imageWrapRef.current;
+      if (imgWrapEl) {
+        imgWrapEl.style.width = `${vw}px`;
+        imgWrapEl.style.transform = 'translate3d(0, 0, 0)';
+        imgWrapEl.style.opacity = '1';
+      }
+      const imgOverlayEl = imageOverlayRef.current;
+      if (imgOverlayEl) {
+        imgOverlayEl.style.opacity = '1';
+      }
     }
 
     // Scroll snapping triggers
@@ -309,7 +317,12 @@ export default function PublicationsFooterSection() {
       // Phase 1: publications fade
       const pubFadeEnd = isMobile ? 0.25 : 0.28;
       const pubFade = 1 - Math.max(0, Math.min(1, p / pubFadeEnd));
-      gsap.set(pubContentRef.current, { opacity: pubFade, pointerEvents: pubFade > 0.05 ? 'auto' : 'none' });
+      
+      const pubEl = pubContentRef.current;
+      if (pubEl) {
+        pubEl.style.opacity = String(pubFade);
+        pubEl.style.pointerEvents = pubFade > 0.05 ? 'auto' : 'none';
+      }
 
       const vw = window.innerWidth;
 
@@ -317,7 +330,11 @@ export default function PublicationsFooterSection() {
         // Interstitial mobile fades
         const interIn  = Math.max(0, Math.min(1, (p - 0.28) / 0.17));
         const interOut = Math.max(0, Math.min(1, (p - 0.60) / 0.12));
-        gsap.set(interstitialRef.current, { opacity: interIn * (1 - interOut), pointerEvents: 'none' });
+        const interEl = interstitialRef.current;
+        if (interEl) {
+          interEl.style.opacity = String(interIn * (1 - interOut));
+          interEl.style.pointerEvents = 'none';
+        }
       } else {
         // Phase 2: image shrinks and centers
         const imgRaw = Math.max(0, Math.min(1, (p - 0.12) / 0.53));
@@ -328,20 +345,31 @@ export default function PublicationsFooterSection() {
         const w       = startW + imgP * (endW - startW);
         const centerX = imgP * (vw - w) / 2;
 
-        if (imageOverlayRef.current) {
-          gsap.set(imageOverlayRef.current, { opacity: 1 - imgP });
+        const imgOverlayEl = imageOverlayRef.current;
+        if (imgOverlayEl) {
+          imgOverlayEl.style.opacity = String(1 - imgP);
         }
 
         // Interstitial
         const interIn  = Math.max(0, Math.min(1, (p - 0.25) / 0.15));
         const interOut = Math.max(0, Math.min(1, (p - 0.54) / 0.14));
-        gsap.set(interstitialRef.current, { opacity: interIn * (1 - interOut), pointerEvents: 'none' });
+        const interEl = interstitialRef.current;
+        if (interEl) {
+          interEl.style.opacity = String(interIn * (1 - interOut));
+          interEl.style.pointerEvents = 'none';
+        }
 
         // Phase 3: crossfade image to video
         const xfadeRaw = Math.max(0, Math.min(1, (p - 0.65) / 0.27));
         const xfade    = 0.5 - 0.5 * Math.cos(Math.PI * xfadeRaw);
 
-        gsap.set(imageWrapRef.current, { width: w, x: centerX, opacity: 1 - xfade });
+        const imgWrapEl = imageWrapRef.current;
+        if (imgWrapEl) {
+          imgWrapEl.style.width = `${w}px`;
+          imgWrapEl.style.transform = `translate3d(${centerX}px, 0, 0)`;
+          imgWrapEl.style.opacity = String(1 - xfade);
+        }
+        
         if (vidUni) vidUni.uOpacity.value = xfade;
 
         if (xfade > 0.04 && !videoPlaying) {
@@ -360,7 +388,11 @@ export default function PublicationsFooterSection() {
       const footerStart = isMobile ? 0.72 : 0.75;
       const footerRange = isMobile ? 0.20 : 0.25;
       const footerFade = Math.max(0, Math.min(1, (p - footerStart) / footerRange));
-      gsap.set(footerContentRef.current, { opacity: footerFade, pointerEvents: footerFade > 0.05 ? 'auto' : 'none' });
+      const footerContentEl = footerContentRef.current;
+      if (footerContentEl) {
+        footerContentEl.style.opacity = String(footerFade);
+        footerContentEl.style.pointerEvents = footerFade > 0.05 ? 'auto' : 'none';
+      }
     }
 
     resetPubAnim();

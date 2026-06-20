@@ -232,7 +232,11 @@
   border-left: 2px solid rgba(249, 115, 22, 0.2);
   min-width: 0;
   overflow: hidden;
-  max-height: 5rem; /* GSAP expands on hover */
+  transition: border-left-color 0.25s ease;
+}
+
+.entry:hover .bullets {
+  border-left-color: rgba(249, 115, 22, 0.6);
 }
 
 .bullet {

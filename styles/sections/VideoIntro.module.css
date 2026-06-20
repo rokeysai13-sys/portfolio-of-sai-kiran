@@ -61,6 +61,7 @@
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 1rem;
+  opacity: 0;
 }
 
 .name {
@@ -69,6 +70,7 @@
   color: #fff;
   line-height: 0.88;
   letter-spacing: -0.02em;
+  opacity: 0;
 }
 
 .role {
@@ -78,6 +80,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-top: 1.25rem;
+  opacity: 0;
 }
 
 /* ── Paused overlay ─────────────────────────── */
@@ -194,6 +197,7 @@
   border: none;
   background: transparent;
   padding: 0;
+  opacity: 0;
 }
 
 .scrollCue:hover {

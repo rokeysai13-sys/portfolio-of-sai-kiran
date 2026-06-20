@@ -30,29 +30,20 @@ export default function WorkExperienceSection() {
 
   function handleCardEnter(i: number) {
     if (typeof window !== 'undefined' && window.innerWidth < 768) return;
-    const ul = bulletListRefs.current[i];
     const dot = dotRefs.current[i];
-    if (!ul) return;
     hoverTlsRef.current[i]?.kill();
     const tl = gsap.timeline();
     hoverTlsRef.current[i] = tl;
-    tl.to(ul,  { maxHeight: ul.scrollHeight, duration: 0.5, ease: 'power2.out' }, 0)
-      .to(ul,  { borderLeftColor: 'rgba(247,147,30,0.6)', duration: 0.3 }, 0)
-      .to(dot, { scale: 1.1, boxShadow: '0 0 0 8px rgba(247,147,30,0.12), 0 0 28px rgba(247,147,30,0.22)', duration: 0.3, ease: 'back.out(2)' }, 0);
+    tl.to(dot, { scale: 1.1, boxShadow: '0 0 0 8px rgba(247,147,30,0.12), 0 0 28px rgba(247,147,30,0.22)', duration: 0.3, ease: 'back.out(2)' }, 0);
   }
 
   function handleCardLeave(i: number) {
     if (typeof window !== 'undefined' && window.innerWidth < 768) return;
-    const ul = bulletListRefs.current[i];
     const dot = dotRefs.current[i];
-    if (!ul) return;
     hoverTlsRef.current[i]?.kill();
-    const collapsed = collapsedHeights.current[i] ?? 80;
     const tl = gsap.timeline();
     hoverTlsRef.current[i] = tl;
-    tl.to(ul,  { maxHeight: collapsed, duration: 0.35, ease: 'power2.in' }, 0)
-      .to(ul,  { borderLeftColor: 'rgba(247,147,30,0.2)', duration: 0.25 }, 0)
-      .to(dot, { scale: 1, boxShadow: '0 0 0 6px rgba(247,147,30,0.05), 0 0 22px rgba(247,147,30,0.1)', duration: 0.25, ease: 'power2.in' }, 0);
+    tl.to(dot, { scale: 1, boxShadow: '0 0 0 6px rgba(247,147,30,0.05), 0 0 22px rgba(247,147,30,0.1)', duration: 0.25, ease: 'power2.in' }, 0);
   }
 
   useEffect(() => {
