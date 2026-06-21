@@ -34,6 +34,13 @@ export const metadata: Metadata = {
     template: '%s | Sai Kiran Putta V.V.',
   },
   description,
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+  },
   keywords: [
     'Sai Kiran Putta V.V.',
     'AI Engineer',

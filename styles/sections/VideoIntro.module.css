@@ -34,11 +34,11 @@
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.72) 0%,
-    rgba(0, 0, 0, 0.28) 50%,
-    rgba(0, 0, 0, 0.62) 100%
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(26, 8, 0, 0.1) 0%,
+    rgba(5, 5, 5, 0.55) 60%,
+    rgba(0, 0, 0, 0.85) 100%
   );
 }
 
@@ -62,6 +62,7 @@
   color: var(--accent);
   margin-bottom: 1rem;
   opacity: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 .name {
@@ -71,16 +72,18 @@
   line-height: 0.88;
   letter-spacing: -0.02em;
   opacity: 0;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .role {
   font-size: clamp(0.75rem, 1.1vw, 0.95rem);
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.75);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-top: 1.25rem;
   opacity: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 /* ── Paused overlay ─────────────────────────── */
@@ -91,14 +94,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.32);
+  background: rgba(0, 0, 0, 0.35);
   border: none;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.3s ease;
 }
 
 .playOverlay:hover {
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.playOverlay svg {
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.playOverlay:hover svg {
+  transform: scale(1.12);
 }
 
 .playOverlay:hover circle {
@@ -108,19 +119,32 @@
 /* ── Sound hint badge ───────────────────────── */
 .soundHint {
   position: absolute;
-  bottom: 5.5rem;
-  right: 2rem;
+  bottom: 6rem;
+  right: 2.2rem;
   z-index: 6;
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
+  gap: 0.65rem;
+  color: #ffffff;
+  background: rgba(15, 15, 15, 0.65);
+  border: 1.5px solid var(--accent);
+  border-radius: 9999px;
+  padding: 0.65rem 1.3rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   pointer-events: none;
   user-select: none;
+  box-shadow: 0 4px 15px rgba(247, 147, 30, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: hintFloat 2s infinite alternate ease-in-out;
+}
+
+@keyframes hintFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
 }
 
 .soundPulse {
@@ -150,33 +174,46 @@
 .controls {
   position: absolute;
   bottom: 2rem;
-  right: 2rem;
+  right: 2.2rem;
   z-index: 6;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .ctrlBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 3.2rem;
+  height: 3.2rem;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  color: rgba(255, 255, 255, 0.8);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
 }
 
 .ctrlBtn:hover {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.45);
-  color: #fff;
+  background: rgba(247, 147, 30, 0.2);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 6px 20px rgba(247, 147, 30, 0.45);
+}
+
+.ctrlBtn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.ctrlBtn:hover svg {
+  transform: scale(1.1);
 }
 
 /* ── Scroll cue ─────────────────────────────── */
@@ -190,10 +227,10 @@
   flex-direction: column;
   align-items: center;
   gap: 0.4rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.65);
   cursor: pointer;
   pointer-events: all;
-  transition: color 0.2s;
+  transition: color 0.2s, transform 0.2s;
   border: none;
   background: transparent;
   padding: 0;
@@ -201,22 +238,25 @@
 }
 
 .scrollCue:hover {
-  color: #fff;
+  color: var(--accent);
+  transform: translateX(-50%) translateY(-2px);
 }
 
 .scrollLabel {
   font-size: 0.58rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
+  font-weight: 700;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .scrollLine {
   width: 1px;
-  height: 38px;
+  height: 42px;
   background: currentColor;
   animation: scrollPulse 1.8s ease-in-out infinite;
   transform-origin: top;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 @keyframes scrollPulse {
@@ -228,8 +268,9 @@
 @media (max-width: 767px) {
   .heroContent { padding: 0 1.5rem; }
   .name        { font-size: clamp(2.8rem, 11vw, 5rem); }
-  .controls    { bottom: 1.5rem; right: 1rem; }
+  .controls    { bottom: 1.5rem; right: 1.2rem; gap: 0.6rem; }
+  .ctrlBtn     { width: 2.8rem; height: 2.8rem; }
   .scrollCue   { bottom: 1.5rem; }
-  .soundHint   { bottom: 4.5rem; right: 1rem; }
+  .soundHint   { bottom: 4.8rem; right: 1.2rem; padding: 0.5rem 1rem; font-size: 0.6rem; }
   .bgVideo     { display: none; }
 }

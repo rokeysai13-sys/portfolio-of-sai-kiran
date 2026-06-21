@@ -16,9 +16,9 @@
 /* ─── Photo ─────────────────────────────────────────────── */
 .photo {
   position: absolute;
-  right: -9%;
+  right: 0;
   bottom: 0;
-  height: 82vh; /* Constrain height to prevent overlapping navbar at smaller heights */
+  height: 100%;
   width: 44%;
   z-index: 1;
   pointer-events: none;
@@ -335,7 +335,7 @@
 
   .photo {
     width: 60%;
-    height: 75svh;
+    height: 100%;
     top: auto;
     bottom: 0;
     right: 0;
@@ -357,7 +357,7 @@
 }
 
 @media (max-width: 374px) {
-  .photo   { width: 75%; height: 65svh; }
+  .photo   { width: 75%; height: 100%; }
   .photoImg { transform: scale(1.15); transform-origin: right bottom; }
   .content { top: 4.5rem; max-width: 60vw; }
 }
@@ -368,8 +368,8 @@
   .pills       { max-width: 100%; }
   .photo {
     width: 50%;
-    height: 80%; /* Reduced from 88% to prevent overlap with header */
-    right: -2%;
+    height: 100%;
+    right: 0;
     bottom: 0;
   }
   .photoImg {
